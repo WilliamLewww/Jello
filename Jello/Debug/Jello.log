@@ -1,11 +1,8 @@
-﻿  player.cpp
+﻿  environment.cpp
   Generating Code...
   Compiling...
-  spritebatch.cpp
-g:\projects\jello\jello\spritebatch.cpp(32): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-g:\projects\jello\jello\spritebatch.cpp(38): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-  main.cpp
-  environment.cpp
+  player.cpp
   Generating Code...
+cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
   Jello.vcxproj -> G:\Projects\Jello\Debug\Jello.exe
   Jello.vcxproj -> G:\Projects\Jello\Debug\Jello.pdb (Partial PDB)

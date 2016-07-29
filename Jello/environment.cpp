@@ -1,5 +1,6 @@
 #include "environment.h"
 
+std::vector<Tile> tileList;
 Grass grass[2];
 
 void Environment::LoadContent() {
@@ -8,6 +9,9 @@ void Environment::LoadContent() {
 	grass[0].position = Vector2(0, 550);
 	grass[1].texture = LoadTexture("../Content/grass.png");
 	grass[1].position = Vector2(400, 550);
+
+	tileList.push_back(grass[0]);
+	tileList.push_back(grass[1]);
 }
 
 void Environment::Update(int gameTime) {

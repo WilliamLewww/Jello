@@ -3,10 +3,11 @@
 void Player::LoadContent() {
 	texture = LoadTexture("../Content/player.png");
 	position = Vector2(25, 500);
-	speed = 50;
-	jumpSpeed = 2.5;
+	speed = 100;
+	jumpSpeed = 5;
 }
 
+std::vector<Tile> groundTileList;
 void Player::Update(int gameTime) {
 	float deltaTimeS = (float)(gameTime) / 1000;
 
@@ -33,11 +34,25 @@ void Player::Update(int gameTime) {
 		if (onGround == true) jumpPress = false;
 	}
 
-	for (auto &tile : grass) {
+	for (auto &tile : tileList) {
 		if (CheckCollision(tile) == true) {
 			HandleCollision(tile);
 		}
 	}
+
+	std::vector<Tile> tempGroundTileList;
+	for (auto &tile : groundTileList) {
+		if (CheckCollision(tile) == false) {
+			tempGroundTileList.push_back(tile);
+		}
+	}
+
+	for (auto &tile : tempGroundTileList) {
+		groundTileList.erase(std::remove(groundTileList.begin(), groundTileList.end(), tile), groundTileList.end());
+	}
+	tempGroundTileList.clear();
+
+	if (groundTileList.size() == 0) onGround = false;
 }
 
 bool Player::CheckCollision(Tile tile) {
@@ -69,6 +84,7 @@ void Player::HandleCollision(Tile tile) {
 				if (velocityY > 0) {
 					onGround = true;
 					position.y += overlapY; velocityY = 0;
+					if (std::find(groundTileList.begin(), groundTileList.end(), tile) == groundTileList.end()) groundTileList.push_back(tile);
 				}
 			}
 			else {
