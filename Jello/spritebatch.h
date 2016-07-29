@@ -6,4 +6,4 @@
 
 //     "../Content/texture.bmp"
 GLuint LoadTexture(const char* path);
-void Draw(GLuint texture, Vector2 position, int width, int height);
+void DrawTexture(GLuint texture, Vector2 position, int width, int height);

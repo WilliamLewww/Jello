@@ -1,7 +1,11 @@
 #include "main.h"
 
+void LoadContent();
 void Update(int gameTime);
 void Render(SDL_Window* window, SDL_GLContext context);
+
+Player player;
+Environment environment;
 
 SDL_Event event;
 SDL_GLContext context;
@@ -12,6 +16,8 @@ int main(int argc, char *argv[]) {
 	displayWindow = SDL_CreateWindow("Jello", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREENWIDTH, SCREENHEIGHT, SDL_WINDOW_OPENGL);
 	context = SDL_GL_CreateContext(displayWindow);
 	glOrtho(-SCREENWIDTH / 2, SCREENWIDTH / 2, SCREENHEIGHT / 2, -SCREENHEIGHT / 2, 0, 1);
+
+	LoadContent();
 
 	while (isRunning) {
 		RemoveInitialPress();
@@ -40,8 +46,13 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-void Update(int gameTime) {
+void LoadContent() {
+	player.LoadContent();
+	environment.LoadContent();
+}
 
+void Update(int gameTime) {
+	player.Update(gameTime);
 }
 
 void Render(SDL_Window* window, SDL_GLContext context) {
@@ -49,6 +60,9 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 	glClearColor(ConvertColor(69), ConvertColor(177), ConvertColor(237), 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
+
+	environment.Draw();
+	player.Draw();
 
 	SDL_GL_SwapWindow(window);
 }

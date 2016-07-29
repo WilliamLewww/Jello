@@ -5,7 +5,7 @@ GLuint LoadTexture(const char* path) {
 		path,
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 
 	if (0 == texture) {
@@ -16,7 +16,7 @@ GLuint LoadTexture(const char* path) {
 	return texture;
 }
 
-void Draw(GLuint texture, Vector2 position, int width, int height) {
+void DrawTexture(GLuint texture, Vector2 position, int width, int height) {
 	Vector2 vectors[4]{
 		Vector2(0, 0),
 		Vector2(1, 0),
