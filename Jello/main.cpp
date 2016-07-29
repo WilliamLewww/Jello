@@ -53,6 +53,7 @@ void LoadContent() {
 
 void Update(int gameTime) {
 	player.Update(gameTime);
+	environment.Update(gameTime);
 }
 
 void Render(SDL_Window* window, SDL_GLContext context) {
@@ -60,6 +61,8 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 	glClearColor(ConvertColor(69), ConvertColor(177), ConvertColor(237), 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	environment.Draw();
 	player.Draw();

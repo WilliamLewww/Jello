@@ -100,5 +100,5 @@ void Player::HandleCollision(Tile tile) {
 }
 
 void Player::Draw() {
-	DrawTexture(texture, position, width, height);
+	DrawTextureFlippedHorizontal(texture, position, width, height);
 }

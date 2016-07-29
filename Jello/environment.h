@@ -2,13 +2,14 @@
 #include "vector2.h"
 #include "spritebatch.h"
 #include <SDL_opengl.h>
+#include <stdlib.h>
 #include <vector>
 
 struct Tile {
 	GLuint texture;
 	Vector2 position;
 
-	const int width = 400, height = 50;
+	int width, height;
 
 	inline double top() { return position.y; }
 	inline double bottom() { return position.y + height; }
@@ -26,13 +27,23 @@ struct Tile {
 extern std::vector<Tile> tileList;
 
 struct Grass : Tile {
-	
+	Grass() {
+		width = 400;
+		height = 50;
+	}
 };
 extern Grass grass[2];
 
 struct Cloud : Tile {
+	Cloud() {
+		width = 300;
+		height = 100;
+	}
 
+	int movement;
+	bool moveLeft;
 };
+extern Cloud cloud[20];
 
 class Environment {
 	GLuint mountain;

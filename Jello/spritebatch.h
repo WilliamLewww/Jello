@@ -7,3 +7,4 @@
 //     "../Content/texture.bmp"
 GLuint LoadTexture(const char* path);
 void DrawTexture(GLuint texture, Vector2 position, int width, int height);
+void DrawTextureFlippedHorizontal(GLuint texture, Vector2 position, int width, int height);
