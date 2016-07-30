@@ -6,7 +6,7 @@
 #include <vector>
 
 struct Tile {
-	GLuint texture;
+	GLuint *texture;
 	Vector2 position;
 
 	int width, height;
@@ -26,6 +26,7 @@ struct Tile {
 };
 extern std::vector<Tile> tileList;
 
+static GLuint grassTexture;
 struct Grass : Tile {
 	Grass() {
 		width = 400;
@@ -34,6 +35,7 @@ struct Grass : Tile {
 };
 extern Grass grass[2];
 
+static GLuint cloudTexture;
 struct Cloud : Tile {
 	Cloud() {
 		width = 300;
@@ -44,6 +46,18 @@ struct Cloud : Tile {
 	bool moveLeft;
 };
 extern Cloud cloud[20];
+
+static GLuint rainTexture[3];
+struct Rain : Tile {
+	Rain() {
+		width = 25;
+		height = 25;
+	}
+
+	double angle;
+	double speedX, speedY;
+};
+extern Rain rain[100];
 
 class Environment {
 	GLuint mountain;

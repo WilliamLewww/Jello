@@ -43,6 +43,37 @@ void DrawTexture(GLuint texture, Vector2 position, int width, int height) {
 	glDisable(GL_TEXTURE_2D);
 }
 
+void DrawTexture(GLuint texture, Vector2 position, double angle, int width, int height) {
+	Vector2 vectors[4]{
+		Vector2(0, 0),
+		Vector2(1, 0),
+		Vector2(1, 1),
+		Vector2(0, 1)
+	};
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(position.x + (width / 2) - (SCREENWIDTH / 2), position.y + (height / 2) - (SCREENHEIGHT / 2), 0);
+	glRotatef(angle, 0, 0, 1);
+	glTranslatef(-(position.x + (width / 2) - (SCREENWIDTH / 2)), -(position.y + (height / 2) - (SCREENHEIGHT / 2)), 0);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);
+	glColor3f(255, 255, 255);
+	for (int x = 0; x < 4; x++) {
+		glTexCoord2f(vectors[x].x, vectors[x].y);
+		vectors[x].x *= width;
+		vectors[x].y *= height;
+		vectors[x] += Vector2(position.x, position.y);
+		vectors[x] -= Vector2(SCREENWIDTH / 2, SCREENHEIGHT / 2);
+
+		glVertex2f(vectors[x].x, vectors[x].y);
+	}
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
 void DrawTextureFlippedHorizontal(GLuint texture, Vector2 position, int width, int height) {
 	Vector2 vectors[4]{
 		Vector2(0, 0),
