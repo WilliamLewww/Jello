@@ -1,7 +1,50 @@
 #include "spritebatch.h"
 
-GLuint LoadTexture(const char* path) {
+int* GetPixelBMP(unsigned char* image, int x, int y, int width, int height) {
+	int pixel[3] = { image[((height - y - 1) * width + x) * 3], image[((height - y - 1) * width + x + 1) * 3], image[((height - y - 1) * width + x + 2) * 3] };
+	return pixel;
+}
 
+unsigned char* ReadBMP(char* path, int &width, int &height) {
+	FILE* f = fopen(path, "rb");
+
+	unsigned char info[54];
+	fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+											   // extract image height and width from header
+	width = *(int*)&info[18];
+	height = *(int*)&info[22];
+	int data_offset = *(int*)(&info[0x0A]);
+	fseek(f, (long int)(data_offset - 54), SEEK_CUR);
+
+	int row_padded = (width * 3 + 3) & (~3);
+	unsigned char* data = new unsigned char[row_padded];
+	unsigned char tmp;
+
+	unsigned char* newData = new unsigned char[width * height * 3];
+	int increment = 0;
+
+	for (int i = 0; i < height; i++)
+	{
+		fread(data, sizeof(unsigned char), row_padded, f);
+		for (int j = 0; j < width * 3; j += 3)
+		{
+			// Convert (B, G, R) to (R, G, B)
+			tmp = data[j];
+			data[j] = data[j + 2];
+			data[j + 2] = tmp;
+
+			newData[increment] = data[j];
+			newData[increment + 1] = data[j + 1];
+			newData[increment + 2] = data[j + 2];
+
+			increment += 3;
+		}
+	}
+	return newData;
+}
+
+GLuint LoadTexture(const char* path) {
 	//Filter SOIL_FLAG_MIPMAPS
 	GLuint texture = SOIL_load_OGL_texture(
 		path,

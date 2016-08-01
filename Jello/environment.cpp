@@ -8,6 +8,8 @@ Rain rain[100];
 void Environment::LoadContent() {
 	filterColor[0] = 0; filterColor[1] = 0; filterColor[2] = 0; filterColor[3] = 255;
 	mountain = LoadTexture("../Content/mountain.png");
+	house = LoadTexture("../Content/house.png");
+	housePos = Vector2(0, 395);
 
 	grassTexture = LoadTexture("../Content/grass.png");
 	for (int x = 0; x < (sizeof(grass) / sizeof(*grass)); x++) {
@@ -35,6 +37,8 @@ void Environment::LoadContent() {
 		rain[x].speedY = rand() % 100 + 200;
 		rain[x].position = Vector2((x * 32) / 3, (x % 3) * 25);
 	}
+
+	houseBMP = ReadBMP("../Content/housemap.bmp", houseWidth, houseHeight);
 }
 
 void Environment::Update(int gameTime) {
@@ -81,7 +85,6 @@ void Environment::Update(int gameTime) {
 			}
 		}
 	}
-	std::cout << filterColor[3] << std::endl;
 }
 
 void Environment::Draw() {
@@ -97,6 +100,19 @@ void Environment::Draw() {
 
 	for (int x = 0; x < (sizeof(cloud) / sizeof(*cloud)); x++) {
 		DrawTexture(*cloud[x].texture, cloud[x].position, cloud[x].width, cloud[x].height);
+	}
+
+	DrawTexture(house, housePos, 419, 155);
+
+	for (int x = 0; x < houseWidth; x++) {
+		for (int y = 0; y < houseHeight; y++) {
+			if (*GetPixelBMP(houseBMP, x, y, houseWidth, houseHeight) < 255) {
+				glColor3f(1, 1, 1);
+				glBegin(GL_POINTS);
+				glVertex2d(x, y - (SCREENHEIGHT / 2) + 395);
+				glEnd();
+			}
+		}
 	}
 }
 

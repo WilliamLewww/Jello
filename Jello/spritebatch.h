@@ -12,3 +12,6 @@ void DrawTexture(GLuint texture, Vector2 position, double angle, int width, int 
 void DrawTextureFlippedHorizontal(GLuint texture, Vector2 position, int width, int height);
 
 void DrawRect(Vector2 position, int width, int height, double color[4]);
+
+int* GetPixelBMP(unsigned char* image, int x, int y, int width, int height);
+unsigned char* ReadBMP(char* path, int &width, int &height);

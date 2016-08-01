@@ -63,6 +63,12 @@ class Environment {
 	GLuint mountain;
 	Vector2 mountainPos;
 
+	GLuint house;
+	Vector2 housePos;
+
+	unsigned char* houseBMP;
+	int houseWidth, houseHeight;
+
 	double filterColor[4];
 	bool filterSwitch, filterSwitchB;
 public:
