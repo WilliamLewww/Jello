@@ -6,6 +6,7 @@ Cloud cloud[20];
 Rain rain[100];
 
 void Environment::LoadContent() {
+	filterColor[0] = 0; filterColor[1] = 0; filterColor[2] = 0; filterColor[3] = 255;
 	mountain = LoadTexture("../Content/mountain.png");
 
 	grassTexture = LoadTexture("../Content/grass.png");
@@ -58,6 +59,29 @@ void Environment::Update(int gameTime) {
 		rain[x].position.x += rain[x].speedX * deltaTimeS;
 		rain[x].position.y += rain[x].speedY * deltaTimeS;
 	}
+
+	if (filterSwitch == false) {
+		filterColor[3] -= .1;
+
+		if (filterColor[3] <= 100) filterSwitch = true;
+	}
+	else {
+		if (filterSwitchB == false) {
+			filterColor[3] += .1;
+
+			if (filterColor[3] >= 160) {
+				filterSwitchB = true;
+			}
+		}
+		else {
+			filterColor[3] -= .1;
+
+			if (filterColor[3] <= 120) {
+				filterSwitchB = false;
+			}
+		}
+	}
+	std::cout << filterColor[3] << std::endl;
 }
 
 void Environment::Draw() {
@@ -74,4 +98,8 @@ void Environment::Draw() {
 	for (int x = 0; x < (sizeof(cloud) / sizeof(*cloud)); x++) {
 		DrawTexture(*cloud[x].texture, cloud[x].position, cloud[x].width, cloud[x].height);
 	}
+}
+
+void Environment::DrawForeground() {
+	DrawRect(Vector2(0, 0), 800, 600, filterColor);
 }

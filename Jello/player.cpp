@@ -15,8 +15,8 @@ void Player::Update(int gameTime) {
 	position.y += velocityY;
 	velocityX = 0;
 
-	if (std::find(keyList.begin(), keyList.end(), SDLK_LEFT) != keyList.end() && std::find(keyList.begin(), keyList.end(), SDLK_RIGHT) == keyList.end()) velocityX = -speed * deltaTimeS;
-	if (std::find(keyList.begin(), keyList.end(), SDLK_RIGHT) != keyList.end() && std::find(keyList.begin(), keyList.end(), SDLK_LEFT) == keyList.end()) velocityX = speed * deltaTimeS;
+	if (std::find(keyList.begin(), keyList.end(), SDLK_LEFT) != keyList.end() && std::find(keyList.begin(), keyList.end(), SDLK_RIGHT) == keyList.end()) { velocityX = -speed * deltaTimeS; facingLeft = true; }
+	if (std::find(keyList.begin(), keyList.end(), SDLK_RIGHT) != keyList.end() && std::find(keyList.begin(), keyList.end(), SDLK_LEFT) == keyList.end()) { velocityX = speed * deltaTimeS; facingLeft = false; }
 
 	if (onGround == true) {
 		if (jumpPress == false) {
@@ -100,5 +100,6 @@ void Player::HandleCollision(Tile tile) {
 }
 
 void Player::Draw() {
-	DrawTextureFlippedHorizontal(texture, position, width, height);
+	if (facingLeft == false) { DrawTextureFlippedHorizontal(texture, position, width, height); }
+	else { DrawTexture(texture, position, width, height); }
 }

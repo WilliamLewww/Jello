@@ -66,6 +66,7 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 
 	environment.Draw();
 	player.Draw();
+	environment.DrawForeground();
 
 	SDL_GL_SwapWindow(window);
 }

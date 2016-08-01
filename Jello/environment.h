@@ -62,8 +62,12 @@ extern Rain rain[100];
 class Environment {
 	GLuint mountain;
 	Vector2 mountainPos;
+
+	double filterColor[4];
+	bool filterSwitch, filterSwitchB;
 public:
 	void LoadContent();
 	void Update(int gameTime);
 	void Draw();
+	void DrawForeground();
 };

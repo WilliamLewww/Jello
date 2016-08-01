@@ -14,6 +14,8 @@ class Player {
 	double speed, jumpSpeed;
 	bool onGround, jumpPress;
 
+	bool facingLeft;
+
 	inline Vector2 midpoint() { return Vector2(position.x + (position.x / 2), position.y + (position.y / 2)); }
 
 	inline double top() { return position.y; }
